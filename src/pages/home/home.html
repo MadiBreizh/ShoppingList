@@ -6,13 +6,44 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <button ion-button (click)='addProduct()'>Ajouter un produit</button>
+<ion-content >
+    
   <ion-list>
-    <button ion-item *ngFor="let product of products| async">
-      <h1>{{ product.name }}</h1>  {{ product.date | date: 'dd/MM HH:mm'}} - Qte : {{ product.quantity}}
-    </button>
+    <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
+      <ion-item-sliding *ngFor="let product of products | async" #item>
+        <ion-item>
+          <ion-note item-start>
+            <ion-icon name="checkmark" *ngIf="!product.valid" ></ion-icon>
+            <ion-icon name="checkmark-circle-outline" *ngIf="product.valid"></ion-icon>
+          </ion-note>
+          <h2>{{ product.name }} - {{ product.valid }}</h2>
+          <p>Quantité -> {{ product.quantity}}</p>
+          <ion-note item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="modify(item)">
+              <ion-icon name="more"></ion-icon>
+              Editer
+          </button>
+          <button ion-button color="secondary" (click)="onValid(item, product)">
+            <ion-icon name="checkmark"></ion-icon>
+              Valider
+            </button>
+        </ion-item-options>
+
+        <ion-item-options side="left" (ionSwipe)="onDelete(item, product)">
+          <button ion-button color="danger" (click)="onDelete(item, product)">
+            <ion-icon name="trash"></ion-icon>
+              Effacer
+          </button>
+          </ion-item-options>
+
+      </ion-item-sliding>
+    </ion-item-group>
   </ion-list>
 
-  
 </ion-content>
+<ion-footer>
+    <button ion-button full outline color="secondary" (click)='addProduct()'>Ajouter un produit</button>
+  </ion-footer>

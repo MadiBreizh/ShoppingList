@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ItemSliding } from 'ionic-angular';
+
+// SERVICES
 import { ProductService } from '../../providers/product-service/product-service';
+
+// PAGES
 import { AddProductPage } from '../add-product/add-product';
+
+// MODELS
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -17,7 +23,9 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
-    this.products = this.getAllProduct();    
+    this.products = this.getAllProduct();
+    console.log(this.products);
+      
   }
 
   addProduct(){
@@ -27,4 +35,22 @@ export class HomePage {
   getAllProduct(){
     return this.productService.getAllProducts();
   }
+
+  onValid(item : ItemSliding, product : Product){
+    this.productService.onValidProduct(product);
+    this.products = this.getAllProduct();    
+    item.close(); 
+  }
+
+  onDelete(item : ItemSliding, product : Product){
+    this.productService.onDeleteProduct(product);
+    this.products = this.getAllProduct();    
+    item.close(); 
+  }
+
+  reorderItems(indexes) {
+    this.productService.reorderItems(indexes);
+    this.products = this.getAllProduct(); 
+  }
+
 }
