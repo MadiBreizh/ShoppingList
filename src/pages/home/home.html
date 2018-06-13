@@ -1,14 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Ma liste de course
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <button ion-button (click)='addProduct()'>Ajouter un produit</button>
+  <ion-list>
+    <button ion-item *ngFor="let product of products| async">
+      <h1>{{ product.name }}</h1>  {{ product.date | date: 'dd/MM HH:mm'}} - Qte : {{ product.quantity}}
+    </button>
+  </ion-list>
+
+  
 </ion-content>

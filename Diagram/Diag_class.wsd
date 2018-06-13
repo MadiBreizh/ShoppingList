@@ -1,0 +1,46 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+StartColor red
+BarColor SaddleBrown
+EndColor Silver
+BackgroundColor Peru
+BackgroundColor << Begin >> Olive
+BorderColor Peru
+FontName Impact
+}
+
+skinparam classAttributeIconSize 0
+
+
+' SMRead"1..*" -> "1"Message
+' SMRead"*" -> "1"Solution
+' User"1" <--"*" Message : -author
+' Solution"*" - "*"User
+
+' EntityBase <|-- Message
+' EntityBase <|-- SMRead
+' EntityBase <|-- User
+' EntityBase <|-- Solution
+
+rectangle "Models"{
+    interface Item {   
+            name : String
+            quantity : number
+            date : number
+        }
+}
+
+rectangle "Services"{
+    class ProductService {
+
+    }
+}
+
+rectangle "Components"{
+    class addProduct {
+        
+    }
+}
+
+@enduml
