@@ -10,14 +10,12 @@
 <ion-content padding>
   <form [formGroup]="formGroup" (ngSubmit)="saveProduct(formGroup.value)" >
     <ion-item>
-      <ion-label>Nom du produit</ion-label>
-      <ion-input type="text" name="name" formControlName= "name" required></ion-input>
+      <ion-input placeholder="Produit" clearInput formControlName= "name" required></ion-input>
       <div class="alert" *ngIf="!formGroup.controls['name'].valid
       && !formGroup.controls['name'].touched" >{{ nameAlert }}</div>
     </ion-item>
     <ion-item>
-      <ion-label>Quantité</ion-label>
-      <ion-input type="number" name="quantity" formControlName= "quantity" required></ion-input>
+      <ion-input type="number" placeholder="quantité" formControlName= "quantity" required></ion-input>
       <div class="alert" *ngIf="!formGroup.controls['quantity'].valid
       && !formGroup.controls['quantity'].touched" >{{ quantityAlert }}</div>
     </ion-item>

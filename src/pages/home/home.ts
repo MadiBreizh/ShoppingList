@@ -36,16 +36,19 @@ export class HomePage {
     return this.productService.getAllProducts();
   }
 
-  onValid(item : ItemSliding, product : Product){
-    this.productService.onValidProduct(product);
+  onSetProduct( product : Product){
+    this.productService.onSetProduct(product);
     this.products = this.getAllProduct();    
-    item.close(); 
   }
 
   onDelete(item : ItemSliding, product : Product){
     this.productService.onDeleteProduct(product);
     this.products = this.getAllProduct();    
     item.close(); 
+  }
+
+  onModify(item : ItemSliding, product : Product){
+    
   }
 
   reorderItems(indexes) {

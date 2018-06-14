@@ -5,17 +5,16 @@ import { Storage } from '@ionic/storage'
 @Injectable()
 export class ProductService {
 
-  
   private products: Product[] = [];
-  
+
   constructor(public storage : Storage) {
   }
 
-  onValidProduct(product : Product) {
+  onSetProduct(product : Product) {
     //End loop if product found
     for (let item of this.products) {
       if(item.date == product.date){
-        item.valid = true;
+        item.valid ? item.valid = true : item.valid = false;
       }
     } 
     this.storage.set('products', this.products);
@@ -29,8 +28,7 @@ export class ProductService {
         break;
       }      
     }
-    this.storage.set('products', this.products);    
-
+    this.storage.set('products', this.products);
   }
   
   reorderItems(indexes) {

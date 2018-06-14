@@ -12,24 +12,22 @@
     <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let product of products | async" #item>
         <ion-item>
-          <ion-note item-start>
-            <ion-icon name="checkmark" *ngIf="!product.valid" ></ion-icon>
-            <ion-icon name="checkmark-circle-outline" *ngIf="product.valid"></ion-icon>
-          </ion-note>
-          <h2>{{ product.name }} - {{ product.valid }}</h2>
-          <p>Quantité -> {{ product.quantity}}</p>
+          <ion-label>
+            <span [ngClass]="{'checked': product.valid}">
+              <h2>{{ product.name }} - {{ product.valid }}</h2>
+              Quantité -> {{ product.quantity}}
+            </span>
+          </ion-label>
           <ion-note item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
+          <ion-checkbox [(ngModel)]="product.valid" (ionChange)="onSetProduct(product)"></ion-checkbox>
         </ion-item>
 
         <ion-item-options side="right">
-          <button ion-button color="primary" (click)="modify(item)">
+          <button ion-button color="primary" (click)="onModify(item, product)">
               <ion-icon name="more"></ion-icon>
               Editer
           </button>
-          <button ion-button color="secondary" (click)="onValid(item, product)">
-            <ion-icon name="checkmark"></ion-icon>
-              Valider
-            </button>
+
         </ion-item-options>
 
         <ion-item-options side="left" (ionSwipe)="onDelete(item, product)">
