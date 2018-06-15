@@ -1,25 +1,32 @@
 <ion-header>
   <ion-navbar>
+
+      <ion-buttons end>
+          <button ion-button [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
+              <ion-icon name="reorder"></ion-icon>
+          </button>
+        </ion-buttons>
     <ion-title>
       Ma liste de course
     </ion-title>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content >
     
   <ion-list>
-    <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
+    <ion-item-group reorder={{stateReorder}} (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let product of products | async" #item>
         <ion-item>
           <ion-label>
             <span [ngClass]="{'checked': product.valid}">
               <h2>{{ product.name }}</h2>
-              Quantité -> {{ product.quantity}}
+              Quantité : {{ product.quantity}}
             </span>
           </ion-label>
-          <ion-note item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
-          <ion-checkbox [(ngModel)]="product.valid" (ionChange)="onSetProduct(product)"></ion-checkbox>
+          <ion-note *ngIf=!stateReorder item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
+          <ion-checkbox *ngIf=!stateReorder [(ngModel)]="product.valid" (ionChange)="onSetProduct(product)"></ion-checkbox>
         </ion-item>
 
         <ion-item-options side="right">

@@ -17,6 +17,7 @@ import { Product } from '../../models/product.model';
 export class HomePage {
 
   products : Promise<Product[]>;
+  stateReorder : boolean = true;
 
   constructor(public navCtrl: NavController,
   private productService : ProductService) {
@@ -45,6 +46,10 @@ export class HomePage {
     this.productService.onDeleteProduct(product);
     this.products = this.getAllProduct();    
     item.close(); 
+  }
+
+  onReorder(){
+    this.stateReorder = !this.stateReorder;
   }
 
   onModify(item : ItemSliding, product : Product){
