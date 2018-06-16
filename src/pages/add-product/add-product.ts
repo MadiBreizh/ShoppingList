@@ -19,6 +19,7 @@ export class AddProductPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private productService : ProductService) {
+      //TODO : Edit from control
       this.formGroup = new FormGroup({
         name: new FormControl(),
         quantity: new FormControl

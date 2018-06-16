@@ -2,6 +2,7 @@
   "TITLE_MAIN": "My list of course",
   "TITLE_ADD_PRODUCT": "Add product",
   "ALERT_DELETE_CHECKED" : "Delete all products checked",
+  "ALERT_EDIT_INPUT" : "Edit",
   "CANCEL" : "Cancel",
   "CONFIRM" : "Confirm",
 

@@ -5,18 +5,31 @@ import { Storage } from '@ionic/storage'
 @Injectable()
 export class ProductService {
 
+
   private products: Product[] = [];
 
   constructor(public storage : Storage) {
   }
 
-  onSetProduct(product : Product) {
-    //End loop if product found
+  onSetItem(product : Product) {
+    //TODO : End loop if product found
     for (let item of this.products) {
       if(item.date == product.date){
-        item.valid ? item.valid = true : item.valid = false;
+        item.valid ? item.valid = false : item.valid = true;
       }
     } 
+    this.storage.set('products', this.products);
+  }
+
+  onEditItem(product : Product) {
+    //TODO : End loop if product found
+    for (let item of this.products) {
+      if(item.date == product.date){
+        item.name = product.name;
+        item.quantity = product.quantity;
+      }
+    }
+    
     this.storage.set('products', this.products);
   }
 

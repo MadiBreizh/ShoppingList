@@ -29,11 +29,11 @@
             </span>
           </ion-label>
           <ion-note *ngIf=!stateReorder item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
-          <ion-checkbox *ngIf=!stateReorder [(ngModel)]="product.valid" (ionChange)="onSetProduct(product)"></ion-checkbox>
+          <ion-checkbox *ngIf=!stateReorder (ionChange)="onSetProduct(product)"></ion-checkbox>
         </ion-item>
 
         <ion-item-options side="right">
-          <button ion-button color="primary" (click)="onModify(item, product)">
+          <button ion-button color="primary" (click)="onEditItem(item, product)">
             <ion-icon name="more"></ion-icon>
             {{ 'Edit' | translate }}
           </button>
