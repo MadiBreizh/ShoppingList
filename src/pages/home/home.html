@@ -1,20 +1,20 @@
 <ion-header>
   <ion-navbar>
 
-      <ion-buttons end>
-          <button ion-button [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
-              <ion-icon name="reorder"></ion-icon>
-          </button>
-        </ion-buttons>
+    <ion-buttons end>
+      <button ion-button [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>
-      Ma liste de course
+      {{ 'TITLE_MAIN' | translate }}
     </ion-title>
 
   </ion-navbar>
 </ion-header>
 
-<ion-content >
-    
+<ion-content>
+
   <ion-list>
     <ion-item-group reorder={{stateReorder}} (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let product of products | async" #item>
@@ -22,7 +22,7 @@
           <ion-label>
             <span [ngClass]="{'checked': product.valid}">
               <h2>{{ product.name }}</h2>
-              Quantité : {{ product.quantity}}
+              {{ 'Quantity' | translate }} : {{ product.quantity}}
             </span>
           </ion-label>
           <ion-note *ngIf=!stateReorder item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
@@ -31,8 +31,8 @@
 
         <ion-item-options side="right">
           <button ion-button color="primary" (click)="onModify(item, product)">
-              <ion-icon name="more"></ion-icon>
-              Editer
+            <ion-icon name="more"></ion-icon>
+            {{ 'Edit' | translate }}
           </button>
 
         </ion-item-options>
@@ -40,9 +40,9 @@
         <ion-item-options side="left" (ionSwipe)="onDelete(item, product)">
           <button ion-button color="danger" (click)="onDelete(item, product)">
             <ion-icon name="trash"></ion-icon>
-              Effacer
+            {{ 'Delete' | translate }}
           </button>
-          </ion-item-options>
+        </ion-item-options>
 
       </ion-item-sliding>
     </ion-item-group>
@@ -50,5 +50,5 @@
 
 </ion-content>
 <ion-footer>
-    <button ion-button full outline color="secondary" (click)='addProduct()'>Ajouter un produit</button>
-  </ion-footer>
+  <button ion-button full outline color="secondary" (click)='addProduct()'>{{ 'addProduct' | translate }}</button>
+</ion-footer>

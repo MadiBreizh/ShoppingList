@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ItemSliding } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 // SERVICES
 import { ProductService } from '../../providers/product-service/product-service';
@@ -20,7 +21,9 @@ export class HomePage {
   stateReorder : boolean = true;
 
   constructor(public navCtrl: NavController,
-  private productService : ProductService) {
+  private productService : ProductService,
+  translate: TranslateService) {
+    translate.setDefaultLang('fr');
   }
 
   ionViewWillEnter(){

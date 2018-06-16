@@ -9,7 +9,16 @@ import { HomePage } from '../pages/home/home';
 import { ProductService } from '../providers/product-service/product-service';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { IonicStorageModule } from '@ionic/storage';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+ 
+export function setTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+ }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -18,10 +27,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (setTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
