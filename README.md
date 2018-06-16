@@ -14,7 +14,7 @@ This is a Simple Shopping List application based on Ionic Cordova
 https://ionicframework.com/docs/intro/deploying/
 
 ## Licence
-You are free to use this porject for any purpose but you have to keep the rights.
+You are free to use this project for any purpose but you have to keep the rights.
 
 ## Credits
 Developed By Erwan ANGOT.
