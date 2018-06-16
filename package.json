@@ -1,8 +1,8 @@
 {
-  "name": "MyShoppingList",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "myshoppinglist",
+  "version": "0.1.0",
+  "author": "Erwan ANGOT",
+  "homepage": "http://",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
