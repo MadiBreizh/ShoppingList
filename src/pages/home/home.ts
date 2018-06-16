@@ -23,7 +23,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
   private productService : ProductService,
   translate: TranslateService) {
-    translate.setDefaultLang('fr');
+    translate.setDefaultLang('en');
   }
 
   ionViewWillEnter(){
