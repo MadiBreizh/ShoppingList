@@ -20,13 +20,22 @@ export class ProductService {
     this.storage.set('products', this.products);
   }
 
-  onDeleteProduct(product : Product) {
+  onDeleteOneProduct(product : Product) {
     //End loop if product found
     for (let index = 0; index < this.products.length; index++) {
       if( this.products[index].date == product.date){
         this.products.splice(index, 1);
         break;
       }      
+    }
+    this.storage.set('products', this.products);
+  }
+
+  onDeleteProductChecked() {
+    for (let index = 0; index < this.products.length; index++) {
+      if( this.products[index].valid){
+        this.products.splice(index, 1);
+      }  
     }
     this.storage.set('products', this.products);
   }

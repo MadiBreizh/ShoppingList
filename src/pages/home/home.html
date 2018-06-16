@@ -2,6 +2,9 @@
   <ion-navbar>
 
     <ion-buttons end>
+      <button ion-button (click)="onDeleteAll()" icon-only>
+          <ion-icon name="trash"></ion-icon>
+        </button>     
       <button ion-button [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
         <ion-icon name="reorder"></ion-icon>
       </button>
@@ -38,7 +41,7 @@
         </ion-item-options>
 
         <ion-item-options side="left" (ionSwipe)="onDelete(item, product)">
-          <button ion-button color="danger" (click)="onDelete(item, product)">
+          <button ion-button color="danger" (click)="onDeleteOne(item, product)">
             <ion-icon name="trash"></ion-icon>
             {{ 'Delete' | translate }}
           </button>

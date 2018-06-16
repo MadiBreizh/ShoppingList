@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ItemSliding } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertController } from 'ionic-angular';
 
 // SERVICES
 import { ProductService } from '../../providers/product-service/product-service';
@@ -18,17 +19,17 @@ import { Product } from '../../models/product.model';
 export class HomePage {
 
   products : Promise<Product[]>;
-  stateReorder : boolean = true;
+  stateReorder : boolean = false;
 
   constructor(public navCtrl: NavController,
   private productService : ProductService,
-  translate: TranslateService) {
-    translate.setDefaultLang('en');
+  private translate: TranslateService,
+  private alertCtrl: AlertController) {
+    translate.setDefaultLang('fr');
   }
 
   ionViewWillEnter(){
     this.products = this.getAllProduct();
-    console.log(this.products);
       
   }
 
@@ -45,10 +46,44 @@ export class HomePage {
     this.products = this.getAllProduct();    
   }
 
-  onDelete(item : ItemSliding, product : Product){
-    this.productService.onDeleteProduct(product);
+  onDeleteOne(item : ItemSliding, product : Product){
+    this.productService.onDeleteOneProduct(product);
     this.products = this.getAllProduct();    
     item.close(); 
+  }
+
+  onDeleteAll() {
+    let msgTranslate: any = {};
+    this.translate.get(['ALERT_DELETE_CHECKED',
+    'confirmMsgDeleteChecked',
+    'CONFIRM',
+    'CANCEL']).subscribe(text => {
+      msgTranslate.title = text["ALERT_DELETE_CHECKED"];
+      msgTranslate.message = text["confirmMsgDeleteChecked"];
+      msgTranslate.confirm = text["CONFIRM"];
+      msgTranslate.cancel = text["CANCEL"];
+    });
+
+    this.alertCtrl.create({
+      title: msgTranslate.title,
+      message: msgTranslate.message,
+      buttons: [
+        {
+          text: msgTranslate.cancel,
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: msgTranslate.confirm,
+          handler: () => {
+            this.productService.onDeleteProductChecked();
+            this.products = this.getAllProduct();
+          }
+        }
+      ]
+    }).present();
+
   }
 
   onReorder(){

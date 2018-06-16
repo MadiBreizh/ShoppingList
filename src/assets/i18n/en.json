@@ -1,13 +1,18 @@
 {
   "TITLE_MAIN": "My list of course",
   "TITLE_ADD_PRODUCT": "Add product",
+  "ALERT_DELETE_CHECKED" : "Delete all products checked",
+  "CANCEL" : "Cancel",
+  "CONFIRM" : "Confirm",
 
   "Quantity" : "Quantity",
   "Product" : "Product",
   "Edit" : "Edit",
   "Delete" : "Remove",
   "addProduct" : "Add product",
-  "saveProduct" : "Save entry"
+  "saveProduct" : "Save entry",
+
+  "confirmMsgDeleteChecked" : "Do you want to delete all product checked ?"
 
   
 }
