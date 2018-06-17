@@ -1,5 +1,5 @@
 # MyShoppingList
-MyShoppingList V 0.1.0
+MyShoppingList V 0.1.1
 This is a Simple Shopping List application based on Ionic Cordova
 
 ## How to run on development mode
