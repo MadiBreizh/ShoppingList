@@ -18,8 +18,8 @@ import { Product } from '../../models/product.model';
 })
 export class HomePage {
 
-  products : Promise<Product[]>;
-  stateReorder : boolean = false;
+  private items : Promise<Product[]>;
+  private stateReorder : boolean = false;
 
   constructor(public navCtrl: NavController,
   private productService : ProductService,
@@ -29,8 +29,7 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
-    this.products = this.getAllProduct();
-      
+    this.items = this.getAllProduct();
   }
 
   addProduct(){
@@ -43,7 +42,7 @@ export class HomePage {
 
   onSetProduct( product : Product){
     this.productService.onSetItem(product);
-    this.products = this.getAllProduct();    
+    this.items = this.getAllProduct();    
   }
 
   onEditItem(item : ItemSliding, product : Product){
@@ -86,7 +85,7 @@ export class HomePage {
               productEdit.name = data.name;
               productEdit.quantity = data.quantity;
               this.productService.onEditItem(productEdit);
-              this.products = this.getAllProduct(); 
+              this.items = this.getAllProduct(); 
             }
           }
         ]
@@ -98,7 +97,7 @@ export class HomePage {
 
   onDeleteOne(item : ItemSliding, product : Product){
     this.productService.onDeleteOneProduct(product);
-    this.products = this.getAllProduct();    
+    this.items = this.getAllProduct();    
     item.close(); 
   }
 
@@ -128,7 +127,7 @@ export class HomePage {
           text: msgTranslate.confirm,
           handler: () => {
             this.productService.onDeleteProductChecked();
-            this.products = this.getAllProduct();
+            this.items = this.getAllProduct();
           }
         }
       ]
@@ -143,7 +142,7 @@ export class HomePage {
 
   reorderItems(indexes) {
     this.productService.reorderItems(indexes);
-    this.products = this.getAllProduct(); 
+    this.items = this.getAllProduct(); 
   }
 
 }

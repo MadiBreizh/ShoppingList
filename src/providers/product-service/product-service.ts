@@ -45,7 +45,8 @@ export class ProductService {
   }
 
   onDeleteProductChecked() {
-    for (let index = 0; index < this.products.length; index++) {
+    
+    for (let index = this.products.length-1; index >= 0 ; index--) {
       if( this.products[index].valid){
         this.products.splice(index, 1);
       }  

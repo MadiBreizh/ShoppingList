@@ -20,28 +20,28 @@
 
   <ion-list>
     <ion-item-group reorder={{stateReorder}} (ionItemReorder)="reorderItems($event)">
-      <ion-item-sliding *ngFor="let product of products | async" #item>
+      <ion-item-sliding *ngFor="let item of items | async" #row>
         <ion-item>
           <ion-label>
-            <span [ngClass]="{'checked': product.valid}">
-              <h2>{{ product.name }}</h2>
-              {{ 'Quantity' | translate }} : {{ product.quantity}}
+            <span [ngClass]="{'checked': item.valid}">
+              <h2>{{ item.name }}</h2>
+              {{ 'Quantity' | translate }} : {{ item.quantity}}
             </span>
           </ion-label>
-          <ion-note *ngIf=!stateReorder item-end> {{ product.date | date: 'dd/MM HH:mm'}} </ion-note>
-          <ion-checkbox *ngIf=!stateReorder [ngModel]="product.valid" (ionChange)="onSetProduct(product)"></ion-checkbox>
+          <ion-note *ngIf=!stateReorder item-end> {{ item.date | date: 'dd/MM HH:mm'}} </ion-note>
+          <ion-checkbox *ngIf=!stateReorder [ngModel]="item.valid" (ionChange)="onSetProduct(item)"></ion-checkbox>
         </ion-item>
 
         <ion-item-options side="right">
-          <button ion-button color="primary" (click)="onEditItem(item, product)">
+          <button ion-button color="primary" (click)="onEditItem(row, item)">
             <ion-icon name="more"></ion-icon>
             {{ 'Edit' | translate }}
           </button>
 
         </ion-item-options>
 
-        <ion-item-options side="left" (ionSwipe)="onDelete(item, product)">
-          <button ion-button color="danger" (click)="onDeleteOne(item, product)">
+        <ion-item-options side="left" (ionSwipe)="onDelete(row, item)">
+          <button ion-button color="danger" (click)="onDeleteOne(row, item)">
             <ion-icon name="trash"></ion-icon>
             {{ 'Delete' | translate }}
           </button>
