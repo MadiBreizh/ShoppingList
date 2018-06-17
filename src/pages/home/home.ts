@@ -32,22 +32,24 @@ export class HomePage {
     this.items = this.getAllProduct();
   }
 
+  // change view to create new Product item
   addProduct(){
     this.navCtrl.push(AddProductPage);
   }
 
+  // call list of product item
   getAllProduct(){
     return this.productService.getAllProducts();
   }
 
+  // set an item clicked to became checked
   onSetProduct( product : Product){
     this.productService.onSetItem(product);
     this.items = this.getAllProduct();    
   }
 
-  onEditItem(item : ItemSliding, product : Product){
-    let productEdit = Object.assign({}, product);
-    
+  // edit an item product
+  onEditItem(row : ItemSliding, product : Product){
     let msgTranslate: any = {};
     this.translate.get(['ALERT_EDIT_INPUT','CANCEL', 'CONFIRM']).subscribe(text => {
       msgTranslate.title = text['ALERT_EDIT_INPUT'];
@@ -55,52 +57,50 @@ export class HomePage {
       msgTranslate.confirm = text['CONFIRM'];
     });
     
-
-      let alert = this.alertCtrl.create({
-        title: msgTranslate.title,
-        inputs: [
-          {
-            name: 'name',
-            value: productEdit.name,
-            type: 'text'
-          
-          },
-          {
-            name: 'quantity',
-            value: String(productEdit.quantity),
-            type: 'number'
+    this.alertCtrl.create({
+      title: msgTranslate.title,
+      inputs: [
+        {
+          name: 'name',
+          value: product.name,
+          type: 'text'
+        
+        },
+        {
+          name: 'quantity',
+          value: String(product.quantity),
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: msgTranslate.cancel,
+          role: 'cancel'
+        },
+        {
+          text: msgTranslate.confirm,
+          handler: data => {
+            // implement controle input
+            product.name = data.name;
+            product.quantity = data.quantity;
+            this.productService.onEditItem(product);
+            this.items = this.getAllProduct(); 
           }
-        ],
-        buttons: [
-          {
-            text: msgTranslate.cancel,
-            role: 'cancel',
-            handler: data => {
-            }
-          },
-          {
-            text: msgTranslate.confirm,
-            handler: data => {
-              // implement controle input
-              productEdit.name = data.name;
-              productEdit.quantity = data.quantity;
-              this.productService.onEditItem(productEdit);
-              this.items = this.getAllProduct(); 
-            }
-          }
-        ]
-      });
-      alert.present();
-      item.close();
+        }
+      ]
+    }).present();
+    row.close();
 
   }
 
-  onDeleteOne(item : ItemSliding, product : Product){
+  // delete an item product
+  onDeleteOne(row : ItemSliding, product : Product){
     this.productService.onDeleteOneProduct(product);
     this.items = this.getAllProduct();    
-    item.close(); 
+    row.close(); 
   }
 
+  // delete all item product checked with confirm message
   onDeleteAll() {
     let msgTranslate: any = {};
     this.translate.get(['ALERT_DELETE_CHECKED',
@@ -119,9 +119,7 @@ export class HomePage {
       buttons: [
         {
           text: msgTranslate.cancel,
-          role: 'cancel',
-          handler: () => {
-          }
+          role: 'cancel'
         },
         {
           text: msgTranslate.confirm,
@@ -135,11 +133,12 @@ export class HomePage {
 
   }
 
+  // activ reorder to list product item
   onReorder(){
     this.stateReorder = !this.stateReorder;
   }
 
-
+  // change position of product item for the new position
   reorderItems(indexes) {
     this.productService.reorderItems(indexes);
     this.items = this.getAllProduct(); 

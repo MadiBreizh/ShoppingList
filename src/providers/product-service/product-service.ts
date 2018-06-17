@@ -11,41 +11,41 @@ export class ProductService {
   constructor(public storage : Storage) {
   }
 
+  // checked item selected by user
   onSetItem(product : Product) {
-    //TODO : End loop if product found
     for (let item of this.products) {
+      console.log(item);
       if(item.date == product.date){
         item.valid ? item.valid = false : item.valid = true;
+        return this.storage.set('products', this.products);
       }
     } 
-    this.storage.set('products', this.products);
   }
 
+  // edit current item modify
   onEditItem(product : Product) {
-    //TODO : End loop if product found
     for (let item of this.products) {
       if(item.date == product.date){
         item.name = product.name;
         item.quantity = product.quantity;
+        return this.storage.set('products', this.products);
       }
     }
-    
-    this.storage.set('products', this.products);
   }
 
+  // delete product
   onDeleteOneProduct(product : Product) {
     //End loop if product found
     for (let index = 0; index < this.products.length; index++) {
       if( this.products[index].date == product.date){
         this.products.splice(index, 1);
-        break;
+        return this.storage.set('products', this.products);
       }      
     }
-    this.storage.set('products', this.products);
   }
 
-  onDeleteProductChecked() {
-    
+  // delete all products checked
+  onDeleteProductChecked() {    
     for (let index = this.products.length-1; index >= 0 ; index--) {
       if( this.products[index].valid){
         this.products.splice(index, 1);
@@ -54,6 +54,7 @@ export class ProductService {
     this.storage.set('products', this.products);
   }
   
+  // assign new position items
   reorderItems(indexes) {
     let element = this.products[indexes.from];
     this.products.splice(indexes.from, 1);
@@ -62,6 +63,7 @@ export class ProductService {
     this.storage.set('products', this.products);
   }
 
+  // save new entry
   saveProduct(product : Product){
     product.date = Date.now();
     product.valid = false;
@@ -69,6 +71,7 @@ export class ProductService {
     this.storage.set('products', this.products);
   }
 
+  // return all items product
   getAllProducts(){
       return this.storage.get('products').then(
         (products) => {
