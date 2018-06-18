@@ -1,7 +1,7 @@
 {
   "TITLE_MAIN": "Ma liste de course",
   "TITLE_ADD_PRODUCT": "Ajouter un produit",
-  "ALERT_DELETE_CHECKED" : "Suppression des produits cochés",
+  "ALERT_DELETE_CHECKED" : "Suppression des produits selectionner",
   "ALERT_EDIT_INPUT" : "Edition",
   "CANCEL" : "Annuler",
   "CONFIRM" : "Confirmer",
@@ -14,6 +14,6 @@
   "saveProduct" : "Enregistrer la saisie",
 
 
-  "confirmMsgDeleteChecked" : "Êtes vous certain de vouloir supprimer tous les produits cochés"
+  "confirmMsgDeleteChecked" : "Êtes vous certain de vouloir supprimer tous les produits cochés ?"
   
 }

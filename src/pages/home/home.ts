@@ -44,7 +44,7 @@ export class HomePage {
 
   // set an item clicked to became checked
   onSetProduct( product : Product){
-    this.productService.onSetItem(product);
+    this.productService.onSetItem(product.date);
     this.items = this.getAllProduct();    
   }
 
@@ -95,7 +95,7 @@ export class HomePage {
 
   // delete an item product
   onDeleteOne(row : ItemSliding, product : Product){
-    this.productService.onDeleteOneProduct(product);
+    this.productService.onDeleteOneProduct(product.date);
     this.items = this.getAllProduct();    
     row.close(); 
   }

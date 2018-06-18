@@ -5,52 +5,42 @@ import { Storage } from '@ionic/storage'
 @Injectable()
 export class ProductService {
 
-
   private products: Product[] = [];
 
   constructor(public storage : Storage) {
   }
 
   // checked item selected by user
-  onSetItem(product : Product) {
-    for (let item of this.products) {
-      console.log(item);
-      if(item.date == product.date){
-        item.valid ? item.valid = false : item.valid = true;
-        return this.storage.set('products', this.products);
-      }
-    } 
+  onSetItem(createDate : Number) {
+    let item  = this.products.find(elt => elt.date == createDate);
+    if(item !== undefined){
+      item.valid ? item.valid = false : item.valid = true;
+      this.storage.set('products', this.products);
+    }
   }
 
   // edit current item modify
   onEditItem(product : Product) {
-    for (let item of this.products) {
-      if(item.date == product.date){
-        item.name = product.name;
-        item.quantity = product.quantity;
-        return this.storage.set('products', this.products);
-      }
+    let item  = this.products.find(elt => elt.date == product.date);
+    if(item !== undefined){
+      item = product;
+      this.storage.set('products', this.products);
     }
   }
 
   // delete product
-  onDeleteOneProduct(product : Product) {
-    //End loop if product found
-    for (let index = 0; index < this.products.length; index++) {
-      if( this.products[index].date == product.date){
-        this.products.splice(index, 1);
-        return this.storage.set('products', this.products);
-      }      
-    }
+  onDeleteOneProduct(createDate : number) {
+    this.products = this.products.filter((product) => {
+      return product.date !== createDate
+    })
+    this.storage.set('products', this.products);
   }
 
   // delete all products checked
-  onDeleteProductChecked() {    
-    for (let index = this.products.length-1; index >= 0 ; index--) {
-      if( this.products[index].valid){
-        this.products.splice(index, 1);
-      }  
-    }
+  onDeleteProductChecked() {
+    this.products = this.products.filter((product) => {
+      return product.valid !== true; 
+    })
     this.storage.set('products', this.products);
   }
   
