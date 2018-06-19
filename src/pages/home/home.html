@@ -1,23 +1,23 @@
 <ion-header>
   <ion-navbar>
-
     <ion-buttons end>
       <button ion-button (click)="onDeleteAll()" icon-only>
           <ion-icon name="trash"></ion-icon>
         </button>     
-      <button ion-button [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
+      <button ion-button [disabled]="filterValue != ''" [ngClass]="{'btn-active': stateReorder}" (click)="onReorder()" icon-only>
         <ion-icon name="reorder"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
       {{ 'TITLE_MAIN' | translate }}
     </ion-title>
-
   </ion-navbar>
+  <ion-toolbar  no-border-top>
+    <ion-searchbar *ngIf="!stateReorder" placeholder="{{ 'filterItems' | translate }}" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-list>
     <ion-item-group reorder={{stateReorder}} (ionItemReorder)="reorderItems($event)">
       <ion-item-sliding *ngFor="let item of items | async" #row>
@@ -31,26 +31,21 @@
           <ion-note *ngIf=!stateReorder item-end> {{ item.date | date: 'dd/MM HH:mm'}} </ion-note>
           <ion-checkbox *ngIf=!stateReorder [ngModel]="item.valid" (ionChange)="onSetProduct(item)"></ion-checkbox>
         </ion-item>
-
         <ion-item-options side="right">
           <button ion-button color="primary" (click)="onEditItem(row, item)">
             <ion-icon name="more"></ion-icon>
             {{ 'Edit' | translate }}
           </button>
-
         </ion-item-options>
-
         <ion-item-options side="left" (ionSwipe)="onDelete(row, item)">
           <button ion-button color="danger" (click)="onDeleteOne(row, item)">
             <ion-icon name="trash"></ion-icon>
             {{ 'Delete' | translate }}
           </button>
         </ion-item-options>
-
       </ion-item-sliding>
     </ion-item-group>
   </ion-list>
-
 </ion-content>
 <ion-footer>
   <button ion-button full outline color="secondary" (click)='addProduct()'>{{ 'addProduct' | translate }}</button>

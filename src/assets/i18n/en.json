@@ -12,6 +12,7 @@
   "Delete" : "Remove",
   "addProduct" : "Add product",
   "saveProduct" : "Save entry",
+  "filterItems" : "Filter Items",
 
   "confirmMsgDeleteChecked" : "Do you want to delete all product checked ?"
 

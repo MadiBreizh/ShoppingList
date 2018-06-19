@@ -13,6 +13,8 @@ export class ProductService {
   // checked item selected by user
   onSetItem(createDate : Number) {
     let item  = this.products.find(elt => elt.date == createDate);
+    console.log(this.products);
+    
     if(item !== undefined){
       item.valid ? item.valid = false : item.valid = true;
       this.storage.set('products', this.products);
@@ -62,12 +64,15 @@ export class ProductService {
   }
 
   // return all items product
-  getAllProducts(){
-      return this.storage.get('products').then(
-        (products) => {
-          this.products = products == null ? [] : products;
-          return [...this.products];
+  getAllProducts(strFilter : string){
+    return this.storage.get('products').then(
+      (products : Product[]) => {
+        this.products = products == null ? [] : products;
+        return products.filter((item : Product) => {
+          return item.name.toLowerCase().includes(strFilter.toLowerCase());
         }
       )
+      }
+    )
   }
 }

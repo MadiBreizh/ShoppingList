@@ -20,15 +20,24 @@ export class HomePage {
 
   private items : Promise<Product[]>;
   private stateReorder : boolean = false;
+  filterValue: string = '';
 
   constructor(public navCtrl: NavController,
   private productService : ProductService,
   private translate: TranslateService,
-  private alertCtrl: AlertController) {
+  private alertCtrl: AlertController,
+  ) {
     translate.setDefaultLang('fr');
   }
 
   ionViewWillEnter(){
+    this.items = this.getAllProduct();
+  }
+
+  
+  filterItems(ev: any) {
+    ev.target.value ? this.filterValue = ev.target.value.trim() : this.filterValue = '';
+  
     this.items = this.getAllProduct();
   }
 
@@ -39,13 +48,13 @@ export class HomePage {
 
   // call list of product item
   getAllProduct(){
-    return this.productService.getAllProducts();
+    return this.productService.getAllProducts(this.filterValue);
   }
 
   // set an item clicked to became checked
   onSetProduct( product : Product){
     this.productService.onSetItem(product.date);
-    this.items = this.getAllProduct();    
+    this.items = this.getAllProduct();  
   }
 
   // edit an item product
@@ -131,6 +140,10 @@ export class HomePage {
       ]
     }).present();
 
+  }
+
+  isReorderable(){
+    this.filterValue != '' ? true : false;
   }
 
   // activ reorder to list product item
