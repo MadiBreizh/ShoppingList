@@ -12,13 +12,24 @@ export class ProductService {
 
   // checked item selected by user
   onSetItem(createDate : Number) {
-    let item  = this.products.find(elt => elt.date == createDate);
-    console.log(this.products);
-    
+    let item  = this.products.find(elt => elt.date == createDate);    
     if(item !== undefined){
       item.valid ? item.valid = false : item.valid = true;
       this.storage.set('products', this.products);
     }
+  }
+
+  // return a string generate with current item product
+  strigifyProduct(){
+    let message : string = 'Contenu de la liste de course <br/> <br/>';
+    message += '---<br>';
+    this.products.forEach((item) => {
+      if(!item.valid){
+        message += item.quantity + 'x ' + item.name + '<br/>';
+      }
+    });
+    message += '---<br><br> Cette liste a été générer par l\'application MyShoppingList';
+    return message;
   }
 
   // edit current item modify
@@ -67,11 +78,16 @@ export class ProductService {
   getAllProducts(strFilter : string){
     return this.storage.get('products').then(
       (products : Product[]) => {
-        this.products = products == null ? [] : products;
-        return products.filter((item : Product) => {
-          return item.name.toLowerCase().includes(strFilter.toLowerCase());
+        if(products == null){
+          this.products = [];
+          return products;
+        } else {
+          this.products = products;
+          return products.filter((item : Product) => {
+            return item.name.toLowerCase().includes(strFilter.toLowerCase());
+          }
+        )
         }
-      )
       }
     )
   }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, ItemSliding } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from 'ionic-angular';
+import { EmailComposer } from '@ionic-native/email-composer';
+
 
 // SERVICES
 import { ProductService } from '../../providers/product-service/product-service';
@@ -23,9 +25,10 @@ export class HomePage {
   filterValue: string = '';
 
   constructor(public navCtrl: NavController,
-  private productService : ProductService,
-  private translate: TranslateService,
-  private alertCtrl: AlertController,
+        private productService : ProductService,
+        private translate: TranslateService,
+        private alertCtrl: AlertController,
+        private emailComposer: EmailComposer
   ) {
     translate.setDefaultLang('fr');
   }
@@ -34,7 +37,15 @@ export class HomePage {
     this.items = this.getAllProduct();
   }
 
-  
+  sendEmail(){
+    let email = {
+      subject: 'Shopping list',
+      body: this.productService.strigifyProduct(),
+      isHtml: true
+    };
+    this.emailComposer.open(email);
+  }
+
   filterItems(ev: any) {
     ev.target.value ? this.filterValue = ev.target.value.trim() : this.filterValue = '';
   

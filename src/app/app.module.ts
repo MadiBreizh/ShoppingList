@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { EmailComposer } from '@ionic-native/email-composer';
  
 export function setTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +49,7 @@ export function setTranslateLoader(http: HttpClient) {
   ],
   providers: [
     StatusBar,
+    EmailComposer,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductService
