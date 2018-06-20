@@ -81,6 +81,8 @@ export class ProductService {
         if(products == null){
           this.products = [];
           return products;
+        } else if (products.length == 0){
+          return products;
         } else {
           this.products = products;
           return products.filter((item : Product) => {
