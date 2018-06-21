@@ -8,11 +8,11 @@ import { EmailComposer } from '@ionic-native/email-composer';
 // SERVICES
 import { ProductService } from '../../providers/product-service/product-service';
 
-// PAGES
-import { AddProductPage } from '../add-product/add-product';
 
 // MODELS
 import { Product } from '../../models/product.model';
+import { OfFactProvider } from '../../providers/of-fact/of-fact';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @Component({
   selector: 'page-home',
@@ -23,12 +23,15 @@ export class HomePage {
   private items : Promise<Product[]>;
   private stateReorder : boolean = false;
   filterValue: string = '';
+  productValue: string = "";
 
   constructor(public navCtrl: NavController,
         private productService : ProductService,
         private translate: TranslateService,
         private alertCtrl: AlertController,
-        private emailComposer: EmailComposer
+        private emailComposer: EmailComposer,
+        private offactService : OfFactProvider,
+        private barcodeScanner: BarcodeScanner,
   ) {
     translate.setDefaultLang('fr');
   }
@@ -50,11 +53,6 @@ export class HomePage {
     ev.target.value ? this.filterValue = ev.target.value.trim() : this.filterValue = '';
   
     this.items = this.getAllProduct();
-  }
-
-  // change view to create new Product item
-  addProduct(){
-    this.navCtrl.push(AddProductPage);
   }
 
   // call list of product item
@@ -166,6 +164,30 @@ export class HomePage {
   reorderItems(indexes) {
     this.productService.reorderItems(indexes);
     this.items = this.getAllProduct(); 
+  }
+
+  onScan(){
+    this.barcodeScanner.scan().then(barcodeData => {
+      this.offactService.getProductByBarre(barcodeData.text).subscribe(data => {
+        if(data['status_verbose'] != "product not found"){
+          this.productValue = data['product']['product_name'];
+        } else {
+          this.alertCtrl.create({
+            title: 'Not found',
+            subTitle: 'Sorry, this product is not referenced',
+            buttons: ['Dismiss']
+          }).present();
+        }
+      })
+    }).catch(err => {
+         console.log('Error', err);
+     });
+  }
+
+  onAddProduct(){
+    this.productService.saveProduct(this.productValue);
+    this.productValue = "";
+    this.items = this.getAllProduct();
   }
 
 }

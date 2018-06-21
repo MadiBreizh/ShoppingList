@@ -51,5 +51,17 @@
   </ion-list>
 </ion-content>
 <ion-footer>
-  <button ion-button full outline color="secondary" (click)='addProduct()'>{{ 'addProduct' | translate }}</button>
+    <ion-grid>
+        <ion-row>
+          <ion-col col-2>
+            <button ion-button (click)="onScan()" color="light" icon-only><ion-icon name="barcode"></ion-icon></button>
+          </ion-col>
+          <ion-col col-8>
+              <ion-input placeholder="{{ 'Product' | translate }}" [(ngModel)]="productValue" clearInput></ion-input>
+          </ion-col>
+          <ion-col col-2>
+              <button ion-button (click)="onAddProduct()" color="secondary" [disabled]="productValue == ''" icon-only><ion-icon name="add"></ion-icon></button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 </ion-footer>

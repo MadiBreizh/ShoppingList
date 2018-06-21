@@ -67,10 +67,17 @@ export class ProductService {
   }
 
   // save new entry
-  saveProduct(product : Product){
-    product.date = Date.now();
-    product.valid = false;
-    this.products.push(product);
+  saveProduct(nameProduct : string){
+    const newProduct: Product = {
+      name : nameProduct,
+      quantity : 1,
+      date : Date.now(),
+      valid : false
+    }
+
+    console.log(nameProduct);
+    
+    this.products.push(newProduct);
     this.storage.set('products', this.products);
   }
 

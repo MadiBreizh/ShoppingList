@@ -8,7 +8,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ProductService } from '../providers/product-service/product-service';
 import { OfFactProvider } from '../providers/of-fact/of-fact';
-import { AddProductPage } from '../pages/add-product/add-product';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -26,8 +25,7 @@ export function setTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    AddProductPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -47,8 +45,7 @@ export function setTranslateLoader(http: HttpClient) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    AddProductPage
+    HomePage
   ],
   providers: [
     StatusBar,
