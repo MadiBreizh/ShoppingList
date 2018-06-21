@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
+//Provider
 import { ProductService } from '../../providers/product-service/product-service';
+import { OfFactProvider } from '../../providers/of-fact/of-fact';
+
 import { Product } from '../../models/product.model';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -24,7 +28,9 @@ export class AddProductPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private productService : ProductService,
-    private barcodeScanner: BarcodeScanner) {
+    private offactService : OfFactProvider,
+    private barcodeScanner: BarcodeScanner,
+    private alertCtrl: AlertController) {
       //TODO : Edit from control
       this.formGroup = new FormGroup({
         name: new FormControl(),
@@ -39,10 +45,21 @@ export class AddProductPage {
 
     onScan(){
       this.barcodeScanner.scan().then(barcodeData => {
-          this.barrecodeValue = barcodeData.text;  
+        this.offactService.getProductByBarre(barcodeData.text).subscribe(data => {
+          if(data['status_verbose'] != "product not found"){
+            this.barrecodeValue = data['product']['product_name'];
+          } else {
+            this.alertCtrl.create({
+              title: 'Not found',
+              subTitle: 'Sorry, this product is not referenced',
+              buttons: ['Dismiss']
+            }).present();
+          }
+        })
       }).catch(err => {
-        console.log('Error', err);
+           console.log('Error', err);
        });
+       
     }
 
 }
