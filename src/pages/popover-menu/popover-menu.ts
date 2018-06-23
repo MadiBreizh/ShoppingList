@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-popover-menu',
@@ -7,16 +7,19 @@ import { ViewController } from 'ionic-angular';
 })
 export class PopoverMenuPage {
 
-  reorder : boolean = false;
+  stateReorder : boolean = false;
 
-  constructor(public viewCtrl: ViewController) {
+  constructor(public viewCtrl: ViewController,
+    public navParams:NavParams) {
+      console.log(navParams.data);
+      
+      this.stateReorder = this.navParams.get('isReorder');
+      console.log(this.stateReorder);
   }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad PopoverMenuPage');
-  // }
-
-  close() {
-    this.viewCtrl.dismiss();
+  onAction(nameAction : string) {
+    this.viewCtrl.dismiss(nameAction);
   }
+
+
 }

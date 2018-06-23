@@ -64,10 +64,31 @@ export class HomePage {
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverMenuPage);
+    let popover = this.popoverCtrl.create(PopoverMenuPage, {isReorder : this.stateReorder});
     popover.present({
       ev: myEvent
     });
+
+    popover.onDidDismiss(popoverData => {      
+      switch(popoverData){
+        case "onSend" : {
+          this.sendEmail();
+          break;
+        }
+        case "onDeleteAll" : {
+          this.onDeleteAll();
+          break;
+        }
+        case "onReorder" : {
+          this.onReorder();
+          break;
+        }
+        case "onAbout" : {
+          break;
+        }
+      }
+      
+    })
   }
 
   ionViewWillEnter() {
@@ -85,7 +106,6 @@ export class HomePage {
 
   filterItems(ev: any) {
     ev.target.value ? this.filterValue = ev.target.value.trim() : this.filterValue = '';
-
     this.items = this.getAllProduct();
   }
 
@@ -183,12 +203,12 @@ export class HomePage {
 
   }
 
-  isReorderable() {
-    this.filterValue != '' ? true : false;
-  }
-
-  // activ reorder to list product item
   onReorder() {
+    // Repop all item before reorder
+    if(this.filterValue != ''){
+      this.filterValue='';
+      this.items = this.getAllProduct();
+    }
     this.stateReorder = !this.stateReorder;
   }
 
@@ -203,10 +223,9 @@ export class HomePage {
       let loading = this.productLoading(barcodeData.text);
       loading.present();
       this.offactService.getProductByBarre(barcodeData.text).subscribe(data => {
+        loading.dismiss();
         if (data['status_verbose'] != "product not found") {
           this.productValue = data['product']['product_name'];
-          // TODO : show error message
-          loading.dismiss();
         } else {
           // TODO : add to utils
           this.alertCtrl.create({
@@ -214,13 +233,14 @@ export class HomePage {
             subTitle: 'Sorry, this product is not referenced',
             buttons: ['Dismiss']
           }).present();
-          // TODO : show success message
-          loading.dismiss();
         }
       })
     }).catch(err => {
-      //TODO : write message 
-      console.log('Error', err);
+      this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'We can\'t load information from internet' ,
+        buttons: ['Dismiss']
+      }).present();
     });
   }
 
@@ -228,7 +248,7 @@ export class HomePage {
   productLoading(barcode: string) {
     return this.loadingCtrl.create({
       spinner: 'dots',
-      content: 'We find product' + barcode
+      content: 'We find product : ' + barcode
     });
   }
 
