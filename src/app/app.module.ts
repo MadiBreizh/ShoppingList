@@ -7,13 +7,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ProductService } from '../providers/product-service/product-service';
-import { AddProductPage } from '../pages/add-product/add-product';
+import { OfFactProvider } from '../providers/of-fact/of-fact';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { EmailComposer } from '@ionic-native/email-composer';
+
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { PopoverMenuPage } from '../pages/popover-menu/popover-menu';
  
 export function setTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -23,7 +27,7 @@ export function setTranslateLoader(http: HttpClient) {
   declarations: [
     MyApp,
     HomePage,
-    AddProductPage
+    PopoverMenuPage
   ],
   imports: [
     BrowserModule,
@@ -44,13 +48,16 @@ export function setTranslateLoader(http: HttpClient) {
   entryComponents: [
     MyApp,
     HomePage,
-    AddProductPage
+    PopoverMenuPage
   ],
   providers: [
     StatusBar,
+    EmailComposer,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductService
+    ProductService,
+    BarcodeScanner,
+    OfFactProvider
   ]
 })
 export class AppModule {}

@@ -12,11 +12,24 @@ export class ProductService {
 
   // checked item selected by user
   onSetItem(createDate : Number) {
-    let item  = this.products.find(elt => elt.date == createDate);
+    let item  = this.products.find(elt => elt.date == createDate);    
     if(item !== undefined){
       item.valid ? item.valid = false : item.valid = true;
       this.storage.set('products', this.products);
     }
+  }
+
+  // return a string generate with current item product
+  strigifyProduct(){
+    let message : string = 'Contenu de la liste de course <br/> <br/>';
+    message += '---<br>';
+    this.products.forEach((item) => {
+      if(!item.valid){
+        message += item.quantity + 'x ' + item.name + '<br/>';
+      }
+    });
+    message += '---<br><br> Cette liste a été générer par l\'application MyShoppingList';
+    return message;
   }
 
   // edit current item modify
@@ -54,20 +67,37 @@ export class ProductService {
   }
 
   // save new entry
-  saveProduct(product : Product){
-    product.date = Date.now();
-    product.valid = false;
-    this.products.push(product);
+  saveProduct(nameProduct : string){
+    const newProduct: Product = {
+      name : nameProduct,
+      quantity : 1,
+      date : Date.now(),
+      valid : false
+    }
+
+    console.log(nameProduct);
+    
+    this.products.push(newProduct);
     this.storage.set('products', this.products);
   }
 
   // return all items product
-  getAllProducts(){
-      return this.storage.get('products').then(
-        (products) => {
-          this.products = products == null ? [] : products;
-          return [...this.products];
+  getAllProducts(strFilter : string){
+    return this.storage.get('products').then(
+      (products : Product[]) => {
+        if(products == null){
+          this.products = [];
+          return products;
+        } else if (products.length == 0){
+          return products;
+        } else {
+          this.products = products;
+          return products.filter((item : Product) => {
+            return item.name.toLowerCase().includes(strFilter.toLowerCase());
+          }
+        )
         }
-      )
+      }
+    )
   }
 }

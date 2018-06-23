@@ -1,0 +1,10 @@
+<ion-list>
+    <button ion-item (click)="onAction('onSend')">Send</button>
+    <button ion-item (click)="onAction('onDeleteAll')">Delete Checked</button>
+    <ion-item>
+      <ion-label>Reorder item</ion-label>
+      <ion-checkbox [ngModel]="stateReorder" (ionChange)="onAction('onReorder')"></ion-checkbox>
+    </ion-item>
+    <button ion-item (click)="onAction('onReorder')">Reorder item</button>
+    <button ion-item (click)="onAction('onAbout')">About</button>
+</ion-list>
