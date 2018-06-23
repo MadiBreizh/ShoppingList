@@ -17,6 +17,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EmailComposer } from '@ionic-native/email-composer';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { PopoverMenuPage } from '../pages/popover-menu/popover-menu';
  
 export function setTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,7 +26,8 @@ export function setTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    PopoverMenuPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ export function setTranslateLoader(http: HttpClient) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    PopoverMenuPage
   ],
   providers: [
     StatusBar,
